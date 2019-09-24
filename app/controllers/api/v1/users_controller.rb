@@ -1,4 +1,5 @@
 class Api::V1::UsersController < ApplicationController
+  before_action :find_user, only: [:show]
   skip_before_action :authorized, only: [:create]
 
   # def profile
@@ -8,6 +9,10 @@ class Api::V1::UsersController < ApplicationController
   def index
     @users = User.all
     render json: @users
+  end
+
+  def show
+
   end
 
   def create
@@ -23,5 +28,9 @@ class Api::V1::UsersController < ApplicationController
   private
   def user_params
     params.require(:user).permit(:username, :password, :bio, :avatar)
+  end
+
+  def find_user
+    @user = User.find(params[:id])
   end
 end
