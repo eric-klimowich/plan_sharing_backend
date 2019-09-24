@@ -2,9 +2,9 @@ class Api::V1::UsersController < ApplicationController
   before_action :find_user, only: [:show]
   skip_before_action :authorized, only: [:create]
 
-  # def profile
-  #   render json: { user: UserSerializer.new(current_user) }, status: :accepted
-  # end
+  def profile
+    render json: { user: UserSerializer.new(current_user) }, status: :accepted
+  end
 
   def index
     @users = User.all
@@ -12,7 +12,13 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def show
-    render json: @user
+    if(!!decoded_token())
+      render json: @user
+    else
+      render json: {
+        message: 'Authorization failed.'
+      }, status: :unauthorized
+    end
   end
 
   def create
