@@ -12,13 +12,8 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def show
-    if(!!decoded_token())
-      render json: @user
-    else
-      render json: {
-        message: 'Authorization failed.'
-      }, status: :unauthorized
-    end
+    authenticate()
+    render json: @user
   end
 
   def create
