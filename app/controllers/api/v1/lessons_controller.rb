@@ -16,6 +16,6 @@ class Api::V1::LessonsController < ApplicationController
   private
 
   def lesson_params
-    params.permit(:title, :content)
+    params.permit(:title, :content, :user_id)
   end
 end
