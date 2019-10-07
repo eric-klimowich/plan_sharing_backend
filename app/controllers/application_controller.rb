@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::API
-  before_action :authorized
+  # before_action :authorized
 
   def secret_key
     "my_s3cr3t_c0d3"
@@ -40,18 +40,27 @@ class ApplicationController < ActionController::API
     end
   end
 
-  def current_user
-    if decoded_token()
-      user_id = decoded_token[0]['user_id']
-      @user = User.find_by(id: user_id)
+  def requires_user
+    @user = User.find(params[:id])
+    if decoded_token[0]['sub'] != @user.id
+      render json: {
+        message: 'Authorization failed.'
+      }, status: :unauthorized
     end
   end
 
-  def logged_in?
-    !!current_user()
-  end
-
-  def authorized
-    render json: { message: 'Please log in' }, status: :unauthorized unless logged_in?()
-  end
+  # def current_user
+  #   if decoded_token()
+  #     user_id = decoded_token[0]['sub']
+  #     @user = User.find_by(id: user_id)
+  #   end
+  # end
+  #
+  # def logged_in?
+  #   !!current_user()
+  # end
+  #
+  # def authorized
+  #   render json: { message: 'Please log in' }, status: :unauthorized unless logged_in?()
+  # end
 end
