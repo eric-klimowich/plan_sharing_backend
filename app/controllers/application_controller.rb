@@ -5,8 +5,16 @@ class ApplicationController < ActionController::API
     "my_s3cr3t_c0d3"
   end
 
+  def payload
+    {
+      sub: @user.id,
+      iat: Time.now.to_i,
+      exp: Time.now.to_i + 7200000
+    }
+  end
+
   def encode_token(payload)
-    JWT.encode(payload, secret_key())
+    JWT.encode(payload, secret_key(), "HS256")
   end
 
   def auth_header
