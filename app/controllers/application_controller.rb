@@ -50,7 +50,11 @@ class ApplicationController < ActionController::API
   end
 
   def get_token_payload(key)
-    decoded_token[0][key]
+    begin
+      decoded_token[0][key]
+    rescue NoMethodError
+      nil
+    end
   end
 
   # def current_user
