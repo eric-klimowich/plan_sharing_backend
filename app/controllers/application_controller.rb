@@ -49,6 +49,10 @@ class ApplicationController < ActionController::API
     end
   end
 
+  def get_token_payload(key)
+    decoded_token[0][key]
+  end
+
   # def current_user
   #   if decoded_token()
   #     user_id = decoded_token[0]['sub']

@@ -27,6 +27,18 @@ class Api::V1::UsersController < ApplicationController
     end
   end
 
+  def logged_in_user
+    @user = User.find_by(id: get_token_payload('sub'))
+
+    if (!!@user)
+      render json: @user
+    else
+      render json: {
+        message: 'Invalid token.'
+      }, status: :unauthorized
+    end
+  end
+
   private
   def user_params
     params.require(:user).permit(:username, :password, :bio, :avatar)
