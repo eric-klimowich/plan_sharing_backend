@@ -1,4 +1,6 @@
 class Api::V1::LessonsController < ApplicationController
+  before_action :authenticate, only: [:create]
+
   def index
     @lessons = Lesson.all
     render json: @lessons
