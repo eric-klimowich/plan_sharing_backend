@@ -1,6 +1,6 @@
 class Api::V1::UsersController < ApplicationController
   before_action :find_user, only: [:show]
-  before_action :authenticate, only: [:show]
+  before_action :authenticate, only: [:index, :show]
   before_action :requires_user, only: [:show]
   # skip_before_action :authorized, only: [:create]
 
