@@ -7,6 +7,7 @@ class Api::V1::LessonsController < ApplicationController
   end
 
   def create
+    debugger
     @lesson = Lesson.create(lesson_params)
     if @lesson.valid?
       render json: @lesson, status: :accepted
@@ -18,6 +19,6 @@ class Api::V1::LessonsController < ApplicationController
   private
 
   def lesson_params
-    params.require(:lesson).permit(:title, :content, :user_id)
+    params.require(:lesson).permit(:title, :content, :subject_name)
   end
 end

@@ -2,7 +2,7 @@ class Api::V1::SubjectsController < ApplicationController
   before_action :authenticate, only: [:create]
 
   def create
-    @subject = Lesson.create(subject_params)
+    @subject = Subject.create(subject_params)
     if @subject.valid?
       render json: @subject, status: :accepted
     else
@@ -11,7 +11,7 @@ class Api::V1::SubjectsController < ApplicationController
   end
 
   private
-  def user_params
+  def subject_params
     params.require(:subject).permit(:name, :user_id)
   end
 end
