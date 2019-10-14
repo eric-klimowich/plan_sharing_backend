@@ -8,7 +8,7 @@ class Api::V1::LessonsController < ApplicationController
 
   def create
     subject = Subject.find_by(name: lesson_params["subject_name"])
-    current_user_id = logged_in_user_id()
+    current_user_id = logged_in_user_id
     if subject
       new_lesson_params = lesson_params.merge({:subject_id => subject.id})
       new_lesson_params.delete("grade_name")

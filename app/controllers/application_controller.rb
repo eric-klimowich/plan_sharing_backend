@@ -22,7 +22,7 @@ class ApplicationController < ActionController::API
   end
 
   def decoded_token
-    if auth_header()
+    if auth_header
       token = auth_header.split(' ')[1]
       begin
         JWT.decode(token, secret_key(), true, algorithm: 'HS256')
@@ -33,7 +33,7 @@ class ApplicationController < ActionController::API
   end
 
   def authenticate
-    if(!decoded_token())
+    if(!decoded_token)
       render json: {
         message: 'Authorization failed.'
       }, status: :unauthorized
