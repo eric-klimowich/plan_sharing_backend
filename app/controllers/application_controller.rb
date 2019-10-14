@@ -57,6 +57,10 @@ class ApplicationController < ActionController::API
     end
   end
 
+  def logged_in_user_id
+    @user = User.find_by(id: get_token_payload('sub'))
+    return @user.id
+  end
   # def current_user
   #   if decoded_token()
   #     user_id = decoded_token[0]['sub']
