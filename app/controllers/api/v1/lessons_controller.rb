@@ -10,6 +10,9 @@ class Api::V1::LessonsController < ApplicationController
     subject = Subject.find_by(name: lesson_params["subject_name"])
     if subject
       new_lesson_params = lesson_params.merge({:subject_id => subject.id})
+      new_lesson_params.delete("user_id")
+    # else
+      # Subject.create(name: lesson_params["subject_name"], user_id)
     end
     @lesson = Lesson.create(new_lesson_params)
     if @lesson.valid?
@@ -22,6 +25,6 @@ class Api::V1::LessonsController < ApplicationController
   private
 
   def lesson_params
-    params.require(:lesson).permit(:title, :content, :subject_name)
+    params.require(:lesson).permit(:title, :content, :subject_name, :user_id)
   end
 end
