@@ -7,8 +7,11 @@ class Api::V1::LessonsController < ApplicationController
   end
 
   def create
-    debugger
-    @lesson = Lesson.create(lesson_params)
+    subject = Subject.find_by(name: lesson_params["subject_name"])
+    if subject
+      new_lesson_params = lesson_params.merge({:subject_id => subject.id})
+    end
+    @lesson = Lesson.create(new_lesson_params)
     if @lesson.valid?
       render json: @lesson, status: :accepted
     else
