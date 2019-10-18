@@ -1,0 +1,2 @@
+class UserGrade < ApplicationRecord
+end
