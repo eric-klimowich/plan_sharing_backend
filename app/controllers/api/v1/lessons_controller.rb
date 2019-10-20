@@ -7,6 +7,9 @@ class Api::V1::LessonsController < ApplicationController
   end
 
   def create
+    current_grade_id = find_or_create_grade
+
+    
     subject = Subject.find_by(name: lesson_params["subject_name"])
     current_user_id = logged_in_user_id
     if subject
@@ -29,6 +32,16 @@ class Api::V1::LessonsController < ApplicationController
   end
 
   private
+
+  def find_or_create_grade
+    grade = Grade.find_by(grade_name: lesson_params["grade_name"])
+    if grade
+      current_grade_id = grade.id
+      current_grade_id
+    else
+      Grade.create(grade_name: lesson_params["grade_name"])
+    end
+  end
 
   def lesson_params
     params.require(:lesson).permit(:title, :content, :grade_name, :subject_name)

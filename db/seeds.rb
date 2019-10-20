@@ -15,6 +15,10 @@ User.create(username: "eklimowich", password: "password", bio: "About me.", avat
 User.create(username: "User1", password: "password1", bio: "About User1.", avatar: "user1pic.com")
 User.create(username: "User2", password: "password2", bio: "About User2.", avatar: "user2pic.com")
 
+Subject.create(name: "ELA", user_id: 1)
+Subject.create(name: "Math", user_id: 1)
+Subject.create(name: "Science", user_id: 1)
+
 Grade.create(grade_name: "K")
 Grade.create(grade_name: "1st")
 Grade.create(grade_name: "2nd")
