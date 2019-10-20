@@ -12,6 +12,6 @@ class Api::V1::GradesController < ApplicationController
 
   private
   def grade_params
-    params.require(:grade).permit(:name, :user_id)
+    params.require(:grade).permit(:grade_name)
   end
 end

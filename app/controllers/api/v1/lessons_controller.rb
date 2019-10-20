@@ -8,21 +8,22 @@ class Api::V1::LessonsController < ApplicationController
 
   def create
     current_grade_id = find_or_create_grade
+    current_subject_id = find_or_create_subject
+    current_user_id = logged_in_user_id
     debugger
 
-    subject = Subject.find_by(name: lesson_params["subject_name"])
-    current_user_id = logged_in_user_id
-    if subject
-      new_lesson_params = lesson_params.merge({:subject_id => subject.id})
-      new_lesson_params.delete("grade_name")
-      new_lesson_params.delete("subject_name")
-    else
-      Subject.create(name: lesson_params["subject_name"], user_id: current_user_id)
-      subject = Subject.find_by(name: lesson_params["subject_name"])
-      new_lesson_params = lesson_params.merge({:subject_id => subject.id})
-      new_lesson_params.delete("grade_name")
-      new_lesson_params.delete("subject_name")
-    end
+    # subject = Subject.find_by(name: lesson_params["subject_name"])
+    # if subject
+    #   new_lesson_params = lesson_params.merge({:subject_id => subject.id})
+    #   new_lesson_params.delete("grade_name")
+    #   new_lesson_params.delete("subject_name")
+    # else
+    #   Subject.create(name: lesson_params["subject_name"], user_id: current_user_id)
+    #   subject = Subject.find_by(name: lesson_params["subject_name"])
+    #   new_lesson_params = lesson_params.merge({:subject_id => subject.id})
+    #   new_lesson_params.delete("grade_name")
+    #   new_lesson_params.delete("subject_name")
+    # end
     @lesson = Lesson.create(new_lesson_params)
     if @lesson.valid?
       render json: @lesson, status: :accepted
@@ -35,15 +36,29 @@ class Api::V1::LessonsController < ApplicationController
 
   def find_or_create_grade
     grade_name_param = lesson_params["grade_name"]
-    grade = Grade.find_by(grade_name: grade_name_param)
-    if grade
-      current_grade_id = grade.id
+    current_grade = Grade.find_by(grade_name: grade_name_param)
+    if current_grade
+      current_grade_id = current_grade.id
       current_grade_id
     else
       Grade.create(grade_name: grade_name_param)
-      grade = Grade.find_by(grade_name: grade_name_param)
-      current_grade_id = grade.id
+      current_grade = Grade.find_by(grade_name: grade_name_param)
+      current_grade_id = current_grade.id
       current_grade_id
+    end
+  end
+
+  def find_or_create_subject
+    subject_name_param = lesson_params["subject_name"]
+    current_subject = Subject.find_by(subject_name: subject_name_param)
+    if current_subject
+      current_subject_id = current_subject.id
+      current_subject_id
+    else
+      Subject.create(subject_name: subject_name_param)
+      current_subject = Subject.find_by(subject_name: subject_name_param)
+      current_subject_id = current_subject.id
+      current_subject_id
     end
   end
 

@@ -2,6 +2,7 @@ class Api::V1::SubjectsController < ApplicationController
   before_action :authenticate, only: [:create]
 
   def create
+    debugger
     @subject = Subject.create(subject_params)
     if @subject.valid?
       render json: @subject, status: :accepted
@@ -12,6 +13,6 @@ class Api::V1::SubjectsController < ApplicationController
 
   private
   def subject_params
-    params.require(:subject).permit(:name, :user_id)
+    params.require(:subject).permit(:subject_name)
   end
 end
