@@ -8,8 +8,8 @@ class Api::V1::LessonsController < ApplicationController
 
   def create
     current_grade_id = find_or_create_grade
+    debugger
 
-    
     subject = Subject.find_by(name: lesson_params["subject_name"])
     current_user_id = logged_in_user_id
     if subject
@@ -34,12 +34,16 @@ class Api::V1::LessonsController < ApplicationController
   private
 
   def find_or_create_grade
-    grade = Grade.find_by(grade_name: lesson_params["grade_name"])
+    grade_name_param = lesson_params["grade_name"]
+    grade = Grade.find_by(grade_name: grade_name_param)
     if grade
       current_grade_id = grade.id
       current_grade_id
     else
-      Grade.create(grade_name: lesson_params["grade_name"])
+      Grade.create(grade_name: grade_name_param)
+      grade = Grade.find_by(grade_name: grade_name_param)
+      current_grade_id = grade.id
+      current_grade_id
     end
   end
 
