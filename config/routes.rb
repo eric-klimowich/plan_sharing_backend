@@ -5,6 +5,7 @@ Rails.application.routes.draw do
       resources :users, only: [:index, :show, :create]
       resources :subjects, only: [:create]
       resources :lessons, only: [:index, :create]
+      resources :user_grades, only: [:create]
       post '/login', to: 'auth#create'
       get '/profile', to: 'users#profile'
       get '/logged_in_user', to: 'users#logged_in_user'
