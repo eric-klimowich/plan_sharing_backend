@@ -6,6 +6,17 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+User.destroy_all
+Grade.destroy_all
+Subject.destroy_all
+Lesson.destroy_all
+
 User.create(username: "eklimowich", password: "password", bio: "About me.", avatar: "mypic.com")
 User.create(username: "User1", password: "password1", bio: "About User1.", avatar: "user1pic.com")
 User.create(username: "User2", password: "password2", bio: "About User2.", avatar: "user2pic.com")
+
+Grade.create(grade_name: "K")
+Grade.create(grade_name: "1st")
+Grade.create(grade_name: "2nd")
+Grade.create(grade_name: "3rd")
+Grade.create(grade_name: "4th")
