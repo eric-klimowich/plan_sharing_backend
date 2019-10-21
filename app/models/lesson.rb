@@ -1,3 +1,3 @@
 class Lesson < ApplicationRecord
-  belongs_to :subject
+  belongs_to :user_grade_subject
 end
