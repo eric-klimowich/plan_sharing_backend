@@ -64,6 +64,10 @@ class Api::V1::LessonsController < ApplicationController
   end
 
   def create_user_grade(current_user_id, current_grade_id)
+    current_user_grades = UserGrade.all.select do |hash|
+      hash[:user_id] == current_user_id && hash[:grade_id] == current_grade_id
+    end
+    debugger
     UserGrade.create(user_id: current_user_id, grade_id: current_grade_id)
   end
 

@@ -8,6 +8,7 @@
 
 User.destroy_all
 Grade.destroy_all
+UserGrade.destroy_all
 Subject.destroy_all
 Lesson.destroy_all
 
@@ -15,12 +16,15 @@ User.create(username: "eklimowich", password: "password", bio: "About me.", avat
 User.create(username: "User1", password: "password1", bio: "About User1.", avatar: "user1pic.com")
 User.create(username: "User2", password: "password2", bio: "About User2.", avatar: "user2pic.com")
 
-Subject.create(name: "ELA", user_id: 1)
-Subject.create(name: "Math", user_id: 1)
-Subject.create(name: "Science", user_id: 1)
+Subject.create(subject_name: "ELA")
+Subject.create(subject_name: "Math")
+Subject.create(subject_name: "Science")
 
 Grade.create(grade_name: "K")
 Grade.create(grade_name: "1st")
 Grade.create(grade_name: "2nd")
 Grade.create(grade_name: "3rd")
 Grade.create(grade_name: "4th")
+
+UserGrade.create(user_id: 1, grade_id: 1)
+UserGrade.create(user_id: 1, grade_id: 2)
