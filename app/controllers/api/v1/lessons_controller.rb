@@ -12,20 +12,11 @@ class Api::V1::LessonsController < ApplicationController
     current_user_grade_id = find_or_create_user_grade(current_user_id, current_grade_id)
     current_subject_id = find_or_create_subject
     current_user_grade_subject_id = find_or_create_user_grade_subject(current_user_grade_id, current_subject_id)
-    debugger
-
-    # subject = Subject.find_by(name: lesson_params["subject_name"])
-    # if subject
-    #   new_lesson_params = lesson_params.merge({:subject_id => subject.id})
-    #   new_lesson_params.delete("grade_name")
-    #   new_lesson_params.delete("subject_name")
-    # else
-    #   Subject.create(name: lesson_params["subject_name"], user_id: current_user_id)
-    #   subject = Subject.find_by(name: lesson_params["subject_name"])
-    #   new_lesson_params = lesson_params.merge({:subject_id => subject.id})
-    #   new_lesson_params.delete("grade_name")
-    #   new_lesson_params.delete("subject_name")
-    # end
+    new_lesson_params = {
+      title: lesson_params["title"],
+      content: lesson_params["content"],
+      user_grade_subject_id: current_user_grade_subject_id
+    }
     @lesson = Lesson.create(new_lesson_params)
     if @lesson.valid?
       render json: @lesson, status: :accepted
