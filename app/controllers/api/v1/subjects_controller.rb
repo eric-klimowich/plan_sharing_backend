@@ -2,7 +2,6 @@ class Api::V1::SubjectsController < ApplicationController
   before_action :authenticate, only: [:create]
 
   def create
-    debugger
     @subject = Subject.create(subject_params)
     if @subject.valid?
       render json: @subject, status: :accepted

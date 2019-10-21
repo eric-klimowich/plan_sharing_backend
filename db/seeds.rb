@@ -28,3 +28,5 @@ Grade.create(grade_name: "4th")
 
 UserGrade.create(user_id: 1, grade_id: 1)
 UserGrade.create(user_id: 1, grade_id: 2)
+
+UserGradeSubject.create(user_grade_id: 1, subject_id: 1)

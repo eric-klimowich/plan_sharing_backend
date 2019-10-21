@@ -7,10 +7,11 @@ class Api::V1::LessonsController < ApplicationController
   end
 
   def create
-    current_grade_id = find_or_create_grade
-    current_subject_id = find_or_create_subject
     current_user_id = logged_in_user_id
+    current_grade_id = find_or_create_grade
     current_user_grade_id = find_or_create_user_grade(current_user_id, current_grade_id)
+    current_subject_id = find_or_create_subject
+    current_user_grade_subject_id = find_or_create_user_grade_subject(current_user_grade_id, current_subject_id)
     debugger
 
     # subject = Subject.find_by(name: lesson_params["subject_name"])
@@ -77,6 +78,23 @@ class Api::V1::LessonsController < ApplicationController
       end
       current_user_grade_id = current_user_grade.first.id
       current_user_grade_id
+    end
+  end
+
+  def find_or_create_user_grade_subject(current_user_grade_id, current_subject_id)
+    current_user_grade_subject = UserGradeSubject.all.select do |user_grade_subject_hash|
+      user_grade_subject_hash[:user_grade_id] == current_user_grade_id && user_grade_subject_hash[:subject_id] == current_subject_id
+    end
+    if current_user_grade_subject.length > 0
+      current_user_grade_subject_id = current_user_grade_subject.first.id
+      current_user_grade_subject_id
+    else
+      UserGradeSubject.create(user_grade_id: current_user_grade_id, subject_id: current_subject_id)
+      current_user_grade_subject = UserGradeSubject.all.select do |user_grade_subject_hash|
+        user_grade_subject_hash[:user_grade_id] == current_user_grade_id && user_grade_subject_hash[:subject_id] == current_subject_id
+      end
+      current_user_grade_subject_id = current_user_grade_subject.first.id
+      current_user_grade_subject_id
     end
   end
 
