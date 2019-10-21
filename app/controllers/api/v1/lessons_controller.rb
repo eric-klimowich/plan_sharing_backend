@@ -10,6 +10,7 @@ class Api::V1::LessonsController < ApplicationController
     current_grade_id = find_or_create_grade
     current_subject_id = find_or_create_subject
     current_user_id = logged_in_user_id
+    create_user_grade(current_user_id, current_grade_id)
     debugger
 
     # subject = Subject.find_by(name: lesson_params["subject_name"])
@@ -60,6 +61,10 @@ class Api::V1::LessonsController < ApplicationController
       current_subject_id = current_subject.id
       current_subject_id
     end
+  end
+
+  def create_user_grade(current_user_id, current_grade_id)
+    UserGrade.create(user_id: current_user_id, grade_id: current_grade_id)
   end
 
   def lesson_params

@@ -1,4 +1,4 @@
 class UserGrade < ApplicationRecord
-  belongs_to :users
-  belongs_to :grades
+  belongs_to :user
+  belongs_to :grade
 end
