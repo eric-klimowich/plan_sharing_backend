@@ -33,7 +33,7 @@ class ApplicationController < ActionController::API
   end
 
   def authenticate
-    if(!decoded_token)
+    if !logged_in?
       render json: {
         message: 'Authorization failed.'
       }, status: :unauthorized
@@ -61,17 +61,18 @@ class ApplicationController < ActionController::API
     @user = User.find_by(id: get_token_payload('sub'))
     return @user.id
   end
-  # def current_user
-  #   if decoded_token()
-  #     user_id = decoded_token[0]['sub']
-  #     @user = User.find_by(id: user_id)
-  #   end
-  # end
-  #
-  # def logged_in?
-  #   !!current_user()
-  # end
-  #
+
+  def current_user
+    if decoded_token()
+      user_id = decoded_token[0]['sub']
+      @user = User.find_by(id: user_id)
+    end
+  end
+
+  def logged_in?
+    !!current_user()
+  end
+
   # def authorized
   #   render json: { message: 'Please log in' }, status: :unauthorized unless logged_in?()
   # end
