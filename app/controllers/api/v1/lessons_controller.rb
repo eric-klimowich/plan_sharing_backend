@@ -1,3 +1,5 @@
+require 'base64'
+
 class Api::V1::LessonsController < ApplicationController
   before_action :authenticate, only: [:create]
 
@@ -8,7 +10,7 @@ class Api::V1::LessonsController < ApplicationController
 
   def show
     @lesson = Lesson.find(params[:id])
-    send_data Base64.decode64(@lesson.file, filename: @lesson.file_name)
+    send_data Base64.decode64(@lesson.file), filename: @lesson.file_name
   end
 
   def create
@@ -24,7 +26,6 @@ class Api::V1::LessonsController < ApplicationController
       file: lesson_params["file"],
       file_name: lesson_params["file_name"]
     }
-    debugger
     @lesson = Lesson.create(new_lesson_params)
     if @lesson.valid?
       render json: @lesson, status: :accepted
