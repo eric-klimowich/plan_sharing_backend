@@ -6,6 +6,11 @@ class Api::V1::LessonsController < ApplicationController
     render json: @lessons
   end
 
+  def show
+    @lesson = Lesson.find(params[:id])
+    send_data Base64.decode64(@lesson.file, filename: @lesson.file_name)
+  end
+
   def create
     current_user_id = logged_in_user_id
     current_grade_id = find_or_create_grade
@@ -15,7 +20,9 @@ class Api::V1::LessonsController < ApplicationController
     new_lesson_params = {
       title: lesson_params["title"],
       description: lesson_params["description"],
-      user_grade_subject_id: current_user_grade_subject_id
+      user_grade_subject_id: current_user_grade_subject_id,
+      file: lesson_params["file"],
+      file_name: lesson_params["file_name"]
     }
     debugger
     @lesson = Lesson.create(new_lesson_params)
