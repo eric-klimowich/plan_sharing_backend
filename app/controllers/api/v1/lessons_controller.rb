@@ -14,9 +14,10 @@ class Api::V1::LessonsController < ApplicationController
     current_user_grade_subject_id = find_or_create_user_grade_subject(current_user_grade_id, current_subject_id)
     new_lesson_params = {
       title: lesson_params["title"],
-      content: lesson_params["content"],
+      description: lesson_params["description"],
       user_grade_subject_id: current_user_grade_subject_id
     }
+    debugger
     @lesson = Lesson.create(new_lesson_params)
     if @lesson.valid?
       render json: @lesson, status: :accepted
@@ -90,6 +91,6 @@ class Api::V1::LessonsController < ApplicationController
   end
 
   def lesson_params
-    params.require(:lesson).permit(:title, :content, :grade_name, :subject_name)
+    params.require(:lesson).permit(:title, :description, :grade_name, :subject_name, :file, :file_name)
   end
 end
