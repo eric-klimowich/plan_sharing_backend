@@ -2,7 +2,7 @@ class ApplicationController < ActionController::API
   # before_action :authorized
 
   def secret_key
-    ENV['SECRET_KEY']
+    'secret_test'
   end
 
   def payload
