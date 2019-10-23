@@ -32,6 +32,10 @@ class Api::V1::LessonsController < ApplicationController
     else
       render json: { errors: @lesson.errors.full_messages }, status: :unprocessible_entity
     end
+
+    def destroy
+      @lesson.destroy
+    end
   end
 
   private
