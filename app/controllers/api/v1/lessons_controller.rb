@@ -35,6 +35,7 @@ class Api::V1::LessonsController < ApplicationController
   end
 
   def destroy
+    @lesson = Lesson.find(params[:id])
     @lesson.destroy
   end
 
