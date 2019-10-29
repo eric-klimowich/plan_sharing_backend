@@ -8,11 +8,6 @@ class Api::V1::LessonsController < ApplicationController
     render json: @lessons
   end
 
-  def logged_in_user_id
-    @user = User.find_by(id: get_token_payload('sub'))
-    return @user.id
-  end
-
   def my_lessons
     @my_lessons = Lesson.all.select do |lessons_hash|
       lessons_hash.user_grade_subject.user_grade.user.id == logged_in_user_id
