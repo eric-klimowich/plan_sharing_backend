@@ -11,6 +11,7 @@ Rails.application.routes.draw do
       post '/login', to: 'auth#create'
       get '/profile', to: 'users#profile'
       get '/logged_in_user', to: 'users#logged_in_user'
+      get '/my_lessons', to: 'lessons#my_lessons'
     end
   end
 end
