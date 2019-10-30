@@ -7,7 +7,7 @@ Rails.application.routes.draw do
       resources :user_grades, only: [:create]
       resources :subjects, only: [:create]
       resources :user_grade_subjects, only: [:create]
-      resources :lessons, only: [:index, :show, :create, :destroy]
+      resources :lessons, only: [:index, :show, :create, :update, :destroy]
       post '/login', to: 'auth#create'
       get '/profile', to: 'users#profile'
       get '/logged_in_user', to: 'users#logged_in_user'
