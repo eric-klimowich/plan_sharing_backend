@@ -41,6 +41,10 @@ class Api::V1::LessonsController < ApplicationController
     end
   end
 
+  def update
+    debugger
+  end
+
   def destroy
     @lesson = Lesson.find(params[:id])
     @lesson.destroy
