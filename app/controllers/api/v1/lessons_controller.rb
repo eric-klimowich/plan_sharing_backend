@@ -42,7 +42,11 @@ class Api::V1::LessonsController < ApplicationController
   end
 
   def update
-    debugger
+    if @lesson.update(lesson_params)
+      render json: @lesson, status: :accepted
+    else
+      render json: { errors: @lesson.errors.full_messages }, status: :unprocessible_entity
+    end
   end
 
   def destroy
