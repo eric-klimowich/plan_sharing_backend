@@ -2,6 +2,7 @@ require 'base64'
 
 class Api::V1::LessonsController < ApplicationController
   before_action :authenticate, only: [:create]
+  before_action :find_lesson, only: [:show, :update, :destroy]
 
   def index
     @lessons = Lesson.all
@@ -16,7 +17,6 @@ class Api::V1::LessonsController < ApplicationController
   end
 
   def show
-    @lesson = Lesson.find(params[:id])
     send_data Base64.decode64(@lesson.file), filename: @lesson.file_name
   end
 
@@ -50,11 +50,11 @@ class Api::V1::LessonsController < ApplicationController
   end
 
   def destroy
-    @lesson = Lesson.find(params[:id])
     @lesson.destroy
   end
 
   private
+
 
   def find_or_create_grade
     grade_name_param = lesson_params["grade_name"]
@@ -120,5 +120,9 @@ class Api::V1::LessonsController < ApplicationController
 
   def lesson_params
     params.require(:lesson).permit(:title, :description, :grade_name, :subject_name, :file, :file_name)
+  end
+
+  def find_lesson
+    @lesson = Lesson.find(params[:id])
   end
 end
