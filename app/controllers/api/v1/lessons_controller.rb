@@ -57,8 +57,8 @@ class Api::V1::LessonsController < ApplicationController
       title: lesson_params["title"],
       description: lesson_params["description"],
       user_grade_subject_id: current_user_grade_subject_id,
-      file: lesson_file,
-      file_name: lesson_file_name
+      file: lesson_params["file"],
+      file_name: lesson_params["file_name"]
     }
     if @lesson.update(new_lesson_params)
       render json: @lesson, status: :accepted
