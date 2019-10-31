@@ -2,7 +2,7 @@ require 'base64'
 
 class Api::V1::LessonsController < ApplicationController
   before_action :authenticate, only: [:create]
-  before_action :find_lesson, only: [:show, :update, :destroy]
+  before_action :find_lesson, only: [:send_lesson_data, :show, :update, :destroy]
 
   def index
     @lessons = Lesson.all
@@ -14,6 +14,12 @@ class Api::V1::LessonsController < ApplicationController
       lessons_hash.user_grade_subject.user_grade.user.id == logged_in_user_id
     end
     render json: @my_lessons
+  end
+
+  def send_lesson_data
+    render json: {
+      "file": @lesson.file
+    }
   end
 
   def show
@@ -42,7 +48,19 @@ class Api::V1::LessonsController < ApplicationController
   end
 
   def update
-    if @lesson.update(lesson_params)
+    current_user_id = logged_in_user_id
+    current_grade_id = find_or_create_grade
+    current_user_grade_id = find_or_create_user_grade(current_user_id, current_grade_id)
+    current_subject_id = find_or_create_subject
+    current_user_grade_subject_id = find_or_create_user_grade_subject(current_user_grade_id, current_subject_id)
+    new_lesson_params = {
+      title: lesson_params["title"],
+      description: lesson_params["description"],
+      user_grade_subject_id: current_user_grade_subject_id,
+      file: lesson_file,
+      file_name: lesson_file_name
+    }
+    if @lesson.update(new_lesson_params)
       render json: @lesson, status: :accepted
     else
       render json: { errors: @lesson.errors.full_messages }, status: :unprocessible_entity

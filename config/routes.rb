@@ -12,6 +12,7 @@ Rails.application.routes.draw do
       get '/profile', to: 'users#profile'
       get '/logged_in_user', to: 'users#logged_in_user'
       get '/my_lessons', to: 'lessons#my_lessons'
+      get '/send_lesson_data/:id', to: 'lessons#send_lesson_data'
     end
   end
 end
