@@ -1,0 +1,2 @@
+class FavoriteLesson < ApplicationRecord
+end
