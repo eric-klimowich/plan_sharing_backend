@@ -1,4 +1,4 @@
 class FavoriteLesson < ApplicationRecord
-  belongs_to :users
-  belongs_to :lessons
+  belongs_to :user
+  belongs_to :lesson
 end
