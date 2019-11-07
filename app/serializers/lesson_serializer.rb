@@ -1,6 +1,8 @@
 class LessonSerializer < ActiveModel::Serializer
   attributes :lesson_data
 
+  # has_many :comments
+
   def lesson_data
     lesson_data_hash = {}
 
@@ -12,6 +14,7 @@ class LessonSerializer < ActiveModel::Serializer
     lesson_data_hash["user"] = object.user_grade_subject.user_grade.user.username
     lesson_data_hash["user_id"] = object.user_grade_subject.user_grade.user.id
     lesson_data_hash["file_name"] = object.file_name
+    lesson_data_hash["comments"] = object.comments
 
     lesson_data_hash
   end
