@@ -10,6 +10,7 @@ Rails.application.routes.draw do
       resources :lessons, only: [:index, :show, :create, :update, :destroy]
       resources :favorite_lessons, only: [:index, :create, :destroy]
       resources :comments, only: [:create]
+      resources :requests, only: [:create]
       post '/login', to: 'auth#create'
       get '/profile', to: 'users#profile'
       get '/logged_in_user', to: 'users#logged_in_user'
