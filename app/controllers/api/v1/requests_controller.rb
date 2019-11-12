@@ -1,6 +1,11 @@
 class Api::V1::RequestsController < ApplicationController
   before_action :authenticate, only: [:create]
 
+  def index
+    @requests = Request.all
+    render json: @requests
+  end
+
   def create
     @request = Request.create(request_params)
     if @request.valid?
