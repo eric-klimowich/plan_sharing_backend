@@ -1,6 +1,11 @@
 class Api::V1::ResponsesController < ApplicationController
   before_action :authenticate, only: [:create]
 
+  def index
+    @responses = Response.all
+    render json: @responses
+  end
+
   def create
     @response = Response.create(response_params)
     if @response.valid?
