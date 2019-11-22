@@ -5,5 +5,6 @@ class User < ApplicationRecord
   has_many :favorite_lessons
   has_many :comments
   has_many :requests
+  has_many :responses
   validates :username, uniqueness: { case_sensative: false }
 end
