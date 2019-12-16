@@ -27,6 +27,15 @@ class Api::V1::UsersController < ApplicationController
     end
   end
 
+  def update
+    if @user.update(user_params)
+      @token = encode_token(payload)
+      render json: { user: UserSerializer.new(@user), jwt: @token }, status: :accepted
+    else
+      render json: { error: 'failed to update user' }, status: :not_acceptable
+    end
+  end
+
   def logged_in_user
     @user = User.find_by(id: get_token_payload('sub'))
 
