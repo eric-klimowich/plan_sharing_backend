@@ -1,3 +1,3 @@
 class UserSerializer < ActiveModel::Serializer
-  attributes :username, :bio, :country, :state, :city, :school, :id
+  attributes :username, :bio, :country, :us_state, :city, :school, :id
 end
